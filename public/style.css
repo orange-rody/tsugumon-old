@@ -1,0 +1,10 @@
+/* 全体のスタイル調整 */
+* {
+  box-sizing: border-box;
+}
+
+/* bodyの初期スタイル調整 */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
