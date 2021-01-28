@@ -28,9 +28,25 @@ const App = () => {
   return(
     <>
       <form id="select-your-image">
+        <canvas id = "cv" width = "300" height = "300" alt= "canvas" />
+        <style jsx>{`
+          #cv {
+            display: block;
+            margin: 24px auto;
+          }
+        `}</style>
         <input type="file" id="file" onChange={showDataURI} />
+        <textarea id="caption">
+        <style jsx>{`
+          #caption {
+            display: block;
+            width: 400px;
+            height: 100px;
+            margin: 24px auto;
+          }
+        `}</style>
+        </textarea>
       </form>
-      <canvas id = "cv" width = "400" height = "400" alt= "canvas" />
     </>
   );
 };
