@@ -1,54 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const App = () => {
-  const fileReader = new FileReader();
-  const showDataURI = () => {
-    let file = document.getElementById('file');
-    let input = file.files[0];
-    let cv = document.getElementById('cv');
-    let c = cv.getContext('2d');
-    fileReader.readAsDataURL(input);
-    fileReader.onload = () => {
-      let img = new Image();
-      img.setAttribute('src',fileReader.result);
-      img.onload = () => {
-        let width = img.width;
-        let height = img.height;
-        if(width > cv.maxWidth){          
-          height = Math.round(height * cv.maxWidth / width);
-          width = cv.maxWidth;
-        }
-        c.drawImage(img,0,0,width,height);
-      };     
-    }
-  };
+export default function Preview() {
 
+  const [preview, setPreview] = useState();
   
+  const handleChangeFile = (e) => {
+    const {files} = e.target;
+    setPreview(window.URL.createObjectURL(files[0]));
+  }
 
   return(
     <>
-      <form id="select-your-image">
-        <canvas id = "cv" width = "300" height = "300" alt= "canvas" />
-        <style jsx>{`
-          #cv {
-            display: block;
-            margin: 24px auto;
+      <label htmlFor="fileElem" id="fileSelect">画像を選択</label>
+      <style jsx>{`
+        #fileSelect{
+          display: block;
+          width: 150px;
+          height: 40px;
+          border-radius: 20px;
+          margin-top: 20px;
+          text-align: center;
+          line-height: 40px;
+          color: hsl(15, 70%, 54%);
+          background-color: hsl(42, 82%, 83%);
+        }
+      `}</style>
+      <input type = "file" id = "fileElem" onChange = {handleChangeFile} />
+      <style jsx>{`
+          #fileElem {
+            display: none;
           }
-        `}</style>
-        <input type="file" id="file" onChange={showDataURI} />
-        <textarea id="caption">
-        <style jsx>{`
-          #caption {
-            display: block;
-            width: 400px;
-            height: 100px;
-            margin: 24px auto;
+      `}</style>
+      <div id="imageWrap">
+      {/* <style jsx> {`
+        #imageWrap {
+          width: 100%;
+          background-image: url("../public/no_image_square.jpg");
+          background-size: cover;
+        }
+      `}</style> */}
+        <img src = {preview} id = "preview" alt = "画像のプレビュー"/>
+        {/* <style jsx>{`
+          #preview {
+            width: 100%;
+            padding-top: 10%;
           }
-        `}</style>
-        </textarea>
-      </form>
+        `}</style> */}
+      </div>
     </>
-  );
-};
-
-export default App;
+  )
+}
