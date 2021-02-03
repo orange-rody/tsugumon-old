@@ -5,8 +5,9 @@ export default function Preview() {
   const [preview, setPreview] = useState();
   
   const handleChangeFile = (e) => {
+    
     const {files} = e.target;
-    setPreview(window.URL.createObjectURL(files[0]));
+    files.length>0? setPreview(window.URL.createObjectURL(files[0])): e.preventDefault();
   }
 
   return(
